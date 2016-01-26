@@ -17,7 +17,10 @@ def main():
     Player2Name = str(input("Enter Player 2 name: "))
     player1Cards, deck = GetPlayerCards(deck)
     player2Cards, deck = GetPlayerCards(deck)
-    
+    Player1Highest = FindHighestCardInHand(player1Cards)
+    Player2Highest = FindHighestCardInHand(player2Cards)
+    print("Player1 Highest: " + Player1Highest.value + Player1Highest.suit)
+    print("Player2 Highest: " + Player2Highest.value + Player2Highest.suit)
     
 ##    ChoiceMade=False
 ##    players = 0
@@ -52,7 +55,6 @@ def ShuffleCards(deck): ##Random Shuffle
         deck.append(NotShuffled[value]) ##Adds card to shuffled array
         NotShuffled.pop(value) ##Removes card from to be shuffled array
     print("Deck shuffled")
-    ##print(len(deck))
     return deck
         
 def GetPlayerCards(deck):
@@ -61,13 +63,23 @@ def GetPlayerCards(deck):
         PlayerCards.append(deck[i]) ##Copy card to player hand
         deck.pop(i) ##Remove card from deck
     return PlayerCards, deck
+
+def FindHighestCardInHand(PlayerCards): ##Finds Highest card in player's hand
+    HighestCard = PlayerCards[0]
+    for i in range(1,2):
+        if PlayerCards[i].numeric > HighestCard.numeric:
+            HighestCard = PlayerCards[i]
+        else:
+            pass
+    return HighestCard
     
-class Card:
+    
+class Card: ##Class for each card
     def __init__(self, value, suit, numeric):
         self.value = value
         self.suit = suit
         self.numeric = numeric
     
-if __name__ == "__main__":
+if __name__ == "__main__": ##Runs main function on start
     main()
 
