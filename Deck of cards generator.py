@@ -1,3 +1,7 @@
+##Card game program
+##Written By R Roe: 150409241
+##For SEF034: Assignment 1
+
 import os
 import random
 import sys
@@ -12,6 +16,8 @@ def main():
         Player1Name = str(input("Enter Player 1 name: "))
         Player2Name = str(input("Enter Player 2 name: "))
         player1Cards, deck = GetPlayerCards(deck)
+        for(i in len(player1Cards)):
+            print(player1Cards[i].value + player1Cards.suit)
         player2Cards, deck = GetPlayerCards(deck)
         Player1Highest = FindHighestCardInHand(player1Cards)
         Player2Highest = FindHighestCardInHand(player2Cards)
