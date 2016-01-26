@@ -1,43 +1,55 @@
-##Generate a deck of cards
-
 import os
 import random
+import sys
 
 
 def main():
     menu()
-    deck = GenerateAndShuffle();
-    print("\n\n")
-    Player1Name = str(input("Enter Player 1 name: "))
-    Player2Name = str(input("Enter Player 2 name: "))
-    player1Cards, deck = GetPlayerCards(deck)
-    player2Cards, deck = GetPlayerCards(deck)
-    Player1Highest = FindHighestCardInHand(player1Cards)
-    Player2Highest = FindHighestCardInHand(player2Cards)
-    print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
-    print(Player2Name +"'s Highest: " + Player2Highest.value + Player2Highest.suit)
-    Draw = CheckForDraw(Player1Highest, Player2Highest)
-    if(not Draw):
-        Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
-        if(Player1Win):
-            print(Player1Name + " WINS!")
+    Continue = PlayOrQuit()
+    while(Continue):
+        deck = GenerateAndShuffle();
+        print("\n\n")
+        Player1Name = str(input("Enter Player 1 name: "))
+        Player2Name = str(input("Enter Player 2 name: "))
+        player1Cards, deck = GetPlayerCards(deck)
+        player2Cards, deck = GetPlayerCards(deck)
+        Player1Highest = FindHighestCardInHand(player1Cards)
+        Player2Highest = FindHighestCardInHand(player2Cards)
+        print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
+        print(Player2Name +"'s Highest card: " + Player2Highest.value + Player2Highest.suit)
+        Draw = CheckForDraw(Player1Highest, Player2Highest)
+        if(not Draw):
+            Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
+            if(Player1Win):
+                print(Player1Name + " WINS!")
+            else:
+                print(Player2Name + " WINS!")
         else:
-            print(Player2Name + " WINS!")
-    else:
-        print("It's a draw!")
+            print("It's a draw!")
+        Continue = PlayOrQuit()
+    sys.exit()
     
-##    ChoiceMade=False
-##    players = 0
-##    while players <= 0:
-##        try:
-##            players = int(input("Input number of players: "))
-##        except ValueError:
-##            print("That is not a valid number")
-def menu():
+def menu(): ##Initial Menu for player
     print("\t\tRandom card game")
-    print("""\n\tCards Will be displayed with value first, then suit.\n\tI.E: A Jack of spades would be written as "JS"\n\tAces are low\n""")
+    print("""\n\tCards Will be displayed with value first, then suit.\n\tI.E: A Jack of spades would be written as "JS"\n\tAces are low\n""") 
 
-def GenerateAndShuffle():
+def PlayOrQuit(): ##Determines whether player wants to keep playing
+    print("""\n\tSelect an option\n\n1. Play Game\n2.Quit""")
+    choice = int(input("\nOption: "))
+    ValidChoice = False
+    while(not ValidChoice):
+        if(choice==1):
+            ValidChoice = True
+            return True
+        elif(choice == 2):
+            ValidChoice = True
+            return False
+        else:
+            print("Choice not valid")
+
+
+
+def GenerateAndShuffle(): ##Generates and Shuffles deck
     suits = ["D", "H", "S", "C"]
     values  = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
     numericValues = [1,2,3,4,5,6,7,8,9,10,11,12,13]
@@ -46,7 +58,7 @@ def GenerateAndShuffle():
     deck = ShuffledDeck
     return deck
                        
-def GenerateCards(suits, values, numericValues):  ##Generates deck of cards
+def GenerateCards(suits, values, numericValues): ##Generates cards for deck and adds to list
     deck = [] 
     for i in range(0, len(values)): ##For each value
         for j in range(0, len(suits)): ##For each suit
@@ -104,4 +116,3 @@ class Card: ##Class for each card
     
 if __name__ == "__main__": ##Runs main function on start
     main()
-
