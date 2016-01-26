@@ -6,12 +6,7 @@ import random
 
 def main():
     menu()
-    suits = ["D", "H", "S", "C"]
-    values  = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
-    numericValues = [1,2,3,4,5,6,7,8,9,10,11,12,13]
-    deck = GenerateCards(suits, values, numericValues)
-    ShuffledDeck = ShuffleCards(deck)
-    deck = ShuffledDeck
+    GenerateAndShuffle();
     print("\n\n")
     Player1Name = str(input("Enter Player 1 name: "))
     Player2Name = str(input("Enter Player 2 name: "))
@@ -19,8 +14,13 @@ def main():
     player2Cards, deck = GetPlayerCards(deck)
     Player1Highest = FindHighestCardInHand(player1Cards)
     Player2Highest = FindHighestCardInHand(player2Cards)
-    print("Player1 Highest: " + Player1Highest.value + Player1Highest.suit)
-    print("Player2 Highest: " + Player2Highest.value + Player2Highest.suit)
+    print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
+    print(Player2Name +"'s Highest: " + Player2Highest.value + Player2Highest.suit)
+    Draw = CheckForDraw(Player1Highest, Player2Highest)
+    if(!Draw):
+        Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
+        if(Player1Win):
+            print(Player1Name + " WINS!")
     
 ##    ChoiceMade=False
 ##    players = 0
@@ -29,14 +29,18 @@ def main():
 ##            players = int(input("Input number of players: "))
 ##        except ValueError:
 ##            print("That is not a valid number")
-    
-    
-    
 def menu():
     print("\t\tRandom card game")
-    print("""\n\tCards Will be displayed with value first, then suit.\n\tI.E: A Jack of spades would be written as "JS"\n """)
+    print("""\n\tCards Will be displayed with value first, then suit.\n\tI.E: A Jack of spades would be written as "JS"\n\tAces are low\n""")
 
-                   
+def GenerateAndShuffle():
+    suits = ["D", "H", "S", "C"]
+    values  = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
+    numericValues = [1,2,3,4,5,6,7,8,9,10,11,12,13]
+    deck = GenerateCards(suits, values, numericValues)
+    ShuffledDeck = ShuffleCards(deck)
+    deck = ShuffledDeck
+                       
 def GenerateCards(suits, values, numericValues):  ##Generates deck of cards
     deck = [] 
     for i in range(0, len(values)): ##For each value
@@ -72,6 +76,12 @@ def FindHighestCardInHand(PlayerCards): ##Finds Highest card in player's hand
         else:
             pass
     return HighestCard
+
+def CheckWinner(Player1, Player2):
+    if
+
+def CompareHighestCards(Player1, Player2):
+    if(Player1)
     
     
 class Card: ##Class for each card
