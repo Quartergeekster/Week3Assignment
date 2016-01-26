@@ -6,7 +6,7 @@ import random
 
 def main():
     menu()
-    GenerateAndShuffle();
+    deck = GenerateAndShuffle();
     print("\n\n")
     Player1Name = str(input("Enter Player 1 name: "))
     Player2Name = str(input("Enter Player 2 name: "))
@@ -17,10 +17,14 @@ def main():
     print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
     print(Player2Name +"'s Highest: " + Player2Highest.value + Player2Highest.suit)
     Draw = CheckForDraw(Player1Highest, Player2Highest)
-    if(!Draw):
+    if(not Draw):
         Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
         if(Player1Win):
             print(Player1Name + " WINS!")
+        else:
+            print(Player2Name + " WINS!")
+    else:
+        print("It's a draw!")
     
 ##    ChoiceMade=False
 ##    players = 0
@@ -40,6 +44,7 @@ def GenerateAndShuffle():
     deck = GenerateCards(suits, values, numericValues)
     ShuffledDeck = ShuffleCards(deck)
     deck = ShuffledDeck
+    return deck
                        
 def GenerateCards(suits, values, numericValues):  ##Generates deck of cards
     deck = [] 
@@ -61,6 +66,7 @@ def ShuffleCards(deck): ##Random Shuffle
     print("Deck shuffled")
     return deck
         
+##This method prevents duplicates of cards occurring
 def GetPlayerCards(deck):
     PlayerCards = [] ##Declares empty array
     for i in range (0,3): ##For 3 cards
@@ -77,11 +83,17 @@ def FindHighestCardInHand(PlayerCards): ##Finds Highest card in player's hand
             pass
     return HighestCard
 
-def CheckWinner(Player1, Player2):
-    if
+def CheckForDraw(Player1, Player2): ##Returns Boolean based on whether it's a draw
+    if(Player1.numeric == Player2.numeric):
+        return True
+    else:
+        return False 
 
-def CompareHighestCards(Player1, Player2):
-    if(Player1)
+def CompareHighestCards(Player1, Player2): ##Returns boolean based on winning card
+    if(Player1.numeric > Player2.numeric):
+        return True
+    else:
+        return False 
     
     
 class Card: ##Class for each card
