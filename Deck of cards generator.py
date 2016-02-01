@@ -16,22 +16,17 @@ def main():
         Player1Name = str(input("Enter Player 1 name: "))
         Player2Name = str(input("Enter Player 2 name: "))
         player1Cards, deck = GetPlayerCards(deck)
-        for(i in len(player1Cards)):
-            print(player1Cards[i].value + player1Cards.suit)
+        ##Prints Player 1's cards
+        #print(Player1Name + "'s cards:")
+        # for i in range(len(player1Cards)):
+        #     print(player1Cards[i].value + player1Cards[i].suit)
         player2Cards, deck = GetPlayerCards(deck)
-        Player1Highest = FindHighestCardInHand(player1Cards)
-        Player2Highest = FindHighestCardInHand(player2Cards)
-        print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
-        print(Player2Name +"'s Highest card: " + Player2Highest.value + Player2Highest.suit)
-        Draw = CheckForDraw(Player1Highest, Player2Highest)
-        if(not Draw):
-            Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
-            if(Player1Win):
-                print(Player1Name + " WINS!")
-            else:
-                print(Player2Name + " WINS!")
-        else:
-            print("It's a draw!")
+        ##Prints Player 2's cards
+        # print(Player2Name + "'s cards:")
+        # for i in range(len(player2Cards)):
+        #     print(player2Cards[i].value + player2Cards[i].suit)
+        CheckHighestCard(player1Cards, player2Cards, Player1Name, Player2Name)
+        CheckTotalValues(player1Cards, player2Cards, Player1Name, Player2Name)
         Continue = PlayOrQuit()
     sys.exit()
     
@@ -40,7 +35,7 @@ def menu(): ##Initial Menu for player
     print("""\n\tCards Will be displayed with value first, then suit.\n\tI.E: A Jack of spades would be written as "JS"\n\tAces are low\n""") 
 
 def PlayOrQuit(): ##Determines whether player wants to keep playing
-    print("""\n\tSelect an option\n\n1. Play Game\n2.Quit""")
+    print("""\n\tSelect an option\n\n1. Play Game\n2. Quit""")
     choice = int(input("\nOption: "))
     ValidChoice = False
     while(not ValidChoice):
@@ -52,8 +47,6 @@ def PlayOrQuit(): ##Determines whether player wants to keep playing
             return False
         else:
             print("Choice not valid")
-
-
 
 def GenerateAndShuffle(): ##Generates and Shuffles deck
     suits = ["D", "H", "S", "C"]
@@ -94,7 +87,7 @@ def GetPlayerCards(deck):
 
 def FindHighestCardInHand(PlayerCards): ##Finds Highest card in player's hand
     HighestCard = PlayerCards[0]
-    for i in range(1,2):
+    for i in range(3):
         if PlayerCards[i].numeric > HighestCard.numeric:
             HighestCard = PlayerCards[i]
         else:
@@ -112,8 +105,38 @@ def CompareHighestCards(Player1, Player2): ##Returns boolean based on winning ca
         return True
     else:
         return False 
-    
-    
+
+def CheckHighestCard(Player1Cards,Player2Cards, Player1Name, Player2Name): #Determines which player has the highest card, and displays output
+    Player1Highest = FindHighestCardInHand(Player1Cards)
+    Player2Highest = FindHighestCardInHand(Player2Cards)
+    print(Player1Name +"'s Highest card: " + Player1Highest.value + Player1Highest.suit)
+    print(Player2Name +"'s Highest card: " + Player2Highest.value + Player2Highest.suit)
+    Draw = CheckForDraw(Player1Highest, Player2Highest)
+    if(not Draw):
+        Player1Win = CompareHighestCards(Player1Highest,Player2Highest)
+        if(Player1Win):
+            print(Player1Name + " wins highest card!")
+        else:
+            print(Player2Name + " wins highest card!")
+    else:
+        print("It's a draw for highest card!")
+
+def CheckTotalValues(Player1Cards, Player2Cards, Player1Name, Player2Name): #Finds the total of each hand, and shows which player has the highest title
+    Player1Total = GetCardTotal(Player1Cards)
+    Player2Total = GetCardTotal(Player2Cards)
+    if(Player1Total > Player2Total):
+        print(Player1Name + " has the highest value total")
+    elif(Player2Total > Player1Total):
+        print(Player1Name + " has the highest value total")
+    elif(Player1Total == Player2Total):
+        print("Players have equal totals")        
+
+def GetCardTotal(PlayerCards): #Gets total of each hand
+    Playertotal = 0
+    for i in range (len(PlayerCards)):
+        Playertotal += PlayerCards[i].numeric
+    return Playertotal
+
 class Card: ##Class for each card
     def __init__(self, value, suit, numeric):
         self.value = value
